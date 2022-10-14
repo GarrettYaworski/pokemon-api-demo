@@ -3,6 +3,7 @@
 //   console.log(res)
 // }))
 
+
 const pokeButton = document.getElementById('get-pokemon');
 const pokeball = document.getElementById('pokeball');
 const BASE_URL = 'http://localhost:4000/api'
@@ -10,9 +11,12 @@ const BASE_URL = 'http://localhost:4000/api'
 const renderPokemon = ({ data }) => {
   data.forEach((pokemon) => {
     const pokemonContainer = document.createElement('div');
+    pokemonContainer.className = 'pokemon-container';
+    pokemonContainer.id = pokemon.id;
     const pokemonImg = document.createElement('img');
     const pokemonLabel = document.createElement('label');
-    pokemonContainer.addEventListener('click', () => battlePokemon(pokemon))
+    pokemonLabel.addEventListener('dblclick', () => editPokemon(pokemon.id))
+    pokemonImg.addEventListener('click', () => battlePokemon(pokemon))
     pokemonLabel.textContent = pokemon.name;
     pokemonImg.src = pokemon.sprites.front_default;
     pokemonContainer.append(pokemonImg, pokemonLabel);
@@ -20,6 +24,25 @@ const renderPokemon = ({ data }) => {
   })
 }
 
+const fireEdit = (id, input) => {
+  console.log(id, input)
+  const body = { id, newName: input.value };
+  axios.put(`${BASE_URL}/pokemon`, body).then((res) => {
+    pokeball.innerHTML = '';
+    renderPokemon(res)
+  })
+}
+
+const editPokemon = (id) => {
+  const pokemonContainer = document.getElementById(id);
+  const div = document.createElement('div')
+  const input = document.createElement('input')
+  const button = document.createElement('button')
+  button.addEventListener('click', () => fireEdit(id, input))
+  button.textContent = 'submit name!'
+  div.append(input, button);
+  pokemonContainer.appendChild(div);
+}
 let contenders = [];
 
 const battlePokemon = (pokemon) => {

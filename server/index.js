@@ -30,5 +30,12 @@ app.delete('/api/pokemon/:id', (req, res) => {
   res.status(200).send(pokemonArr);
 })
 
+app.put('/api/pokemon', (req, res) => {
+  const { id, newName } = req.body;
+  const pokemonToEdit = pokemonArr.findIndex((pokemon) => pokemon.id === id);
+  pokemonArr[pokemonToEdit].name = newName;
+  res.status(200).send(pokemonArr);
+})
+
 
 app.listen(4000, () => console.log('listening on 4000'))
