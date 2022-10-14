@@ -1,0 +1,46 @@
+#get-pokemon {
+  display: inline-block;
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  background-color: red;
+  overflow: hidden;
+}
+
+.half {
+  border-top: 5px solid black;
+  position: relative;
+  right: 10px;
+  top: 25px;
+  height: 60%;
+  width: 120%;
+}
+
+.bottom {
+  background-color: azure;
+}
+.center {
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  border-radius: 50%;
+  background: azure;
+  border: 5px solid black;
+  top: 42px;
+  left: 42px;
+}
+
+#pokeball {
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+#pokeball div {
+  display: flex;
+  align-items: center;
+  border: 2px solid black;
+  height: 100px;
+  width: 25%;
+}
