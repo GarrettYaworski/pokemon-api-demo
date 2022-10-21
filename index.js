@@ -9,23 +9,23 @@ const pokeball = document.getElementById('pokeball');
 const BASE_URL = 'http://localhost:4000/api'
 
 const renderPokemon = ({ data }) => {
+  console.log(data)
   data.forEach((pokemon) => {
     const pokemonContainer = document.createElement('div');
     pokemonContainer.className = 'pokemon-container';
-    pokemonContainer.id = pokemon.id;
+    pokemonContainer.id = pokemon.pokemon_id;
     const pokemonImg = document.createElement('img');
     const pokemonLabel = document.createElement('label');
-    pokemonLabel.addEventListener('dblclick', () => editPokemon(pokemon.id))
+    pokemonLabel.addEventListener('dblclick', () => editPokemon(pokemon.pokemon_id))
     pokemonImg.addEventListener('click', () => battlePokemon(pokemon))
     pokemonLabel.textContent = pokemon.name;
-    pokemonImg.src = pokemon.sprites.front_default;
+    pokemonImg.src = pokemon.image;
     pokemonContainer.append(pokemonImg, pokemonLabel);
     pokeball.appendChild(pokemonContainer);
   })
 }
 
 const fireEdit = (id, input) => {
-  console.log(id, input)
   const body = { id, newName: input.value };
   axios.put(`${BASE_URL}/pokemon`, body).then((res) => {
     pokeball.innerHTML = '';
@@ -53,10 +53,10 @@ const battlePokemon = (pokemon) => {
   const pokemon2BattleRoll = Math.random() * contender2.base_experience;
   if(pokemon1BattleRoll > pokemon2BattleRoll){
     alert(`${contender2.name} has fainted`)
-    deletePokemon(contender2.id)
+    deletePokemon(contender2.pokemon_id)
   } else {
     alert(`${contender1.name} has fainted`)
-    deletePokemon(contender1.id)
+    deletePokemon(contender1.pokemon_id)
   }
   contenders = [];
 }
